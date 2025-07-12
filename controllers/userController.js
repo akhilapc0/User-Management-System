@@ -34,7 +34,8 @@ const sendVerifyMail=async(name,email,token)=>{
                 from:config.emailPassword,
                 to:email,
                 subject:'for verification mail',
-                html:'<p> Hi'+name+',please click here to <a href="http://localhost:3000/verify?id='+user_id+'">verify </a> your mail.</p>'
+                 html:'<p> Hi'+name+',please click here to <a href="http://localhost:3000/verify?id='+token+'">verify </a> your mail.</p>'
+
 
             }
 
@@ -263,6 +264,34 @@ const resetPassword=async(req,res)=>{
     }
 }
 
+//for verification send mail link
+
+const verificationLoad=async(req,res)=>{
+    try{
+        res.render('verification')
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
+const sendVerificationLink=async(req,res)=>{
+    try{
+        const email=req.body.email;
+
+        const userData=await User.findOne({email:email});
+        if(userData){
+            sendVerifyMail(userData.name,userData.email,userData._id)
+            res.render("verification",{message:"reset verification mail send your mail id,please check"})
+        }
+        else{
+            res.render('verification',{message:"this email not exist "})
+        }
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
 module.exports={
     loadRegister,
     insertUser,
@@ -274,5 +303,8 @@ module.exports={
     forgotLoad,
     forgotVerify,
     forgotPasswordLoad,
-    resetPassword
+    resetPassword,
+    verificationLoad,
+    sendVerificationLink
 }
+

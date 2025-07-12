@@ -2,7 +2,7 @@
 
 
 
-<h1>Login</h1>
+<h1>verification</h1>
 
 <%
     if(typeof message !=='undefined'){
@@ -14,25 +14,17 @@
 
 
 
-<form action="/login" method="post">
+<form action="" method="post">
     <input type="email" name="email" required placeholder="Enter email">
     <br>
     <br>
-    <input type="password" name="password" required placeholder="Enter password">
-    <br>
-    <br>
-    <input type="submit" value="login">
+    
+    <input type="submit" value="send verification  link">
 </form>
 
-<a href="/forgot">forgot password</a>
 
-<a href="/verification">verification</a>
 
 <%include('../layouts/footer.ejs')%>
-
-
-
-
 
 
 
