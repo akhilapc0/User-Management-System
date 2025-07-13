@@ -17,6 +17,7 @@ user_route.set('view engine','ejs');
 user_route.set('views','./views/users');
 const multer=require('multer');
 const path=require('path');
+user_route.use(express.static("public"));
 const storage=multer.diskStorage({
 
     destination:function(req,file,cb){
