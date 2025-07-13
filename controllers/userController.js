@@ -295,6 +295,38 @@ const sendVerificationLink=async(req,res)=>{
         console.log(error.message)
     }
 }
+//user profile edit and update
+const editLoad=async(req,res)=>{
+    try{
+        const id=req.query.id;
+        const userData=await User.findById({_id:id});
+        if(userData){
+            res.render("edit",{user:userData})
+        }
+        else{
+            res.redirect('/home')
+        }
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
+
+
+const updateProfile=async(req,res)=>{
+    try{
+        if(req.file){
+            const userData=await User.findByIdAndUpdate({_id:req.body.user_id},{$set:{name:req.body.name,email:req.body.email,mobile:req.body.mno,image:req.file.filename}})
+        }
+        else{
+        const userData=await User.findByIdAndUpdate({_id:req.body.user_id},{$set:{name:req.body.name,email:req.body.email,mobile:req.body.mno}})
+        }
+        res.redirect('/home');
+    }
+    catch(error){
+        console.log(error.message)
+    }
+}
 module.exports={
     loadRegister,
     insertUser,
@@ -308,6 +340,8 @@ module.exports={
     forgotPasswordLoad,
     resetPassword,
     verificationLoad,
-    sendVerificationLink
+    sendVerificationLink,
+    editLoad,
+    updateProfile
 }
 
